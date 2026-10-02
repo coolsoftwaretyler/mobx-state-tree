@@ -23,5 +23,5 @@
     "skipLibCheck": true
   },
   "include": ["**/*.js", "**/*.ts"],
-  "exclude": ["node_modules", "lib", "dist", "scripts"]
+  "exclude": ["node_modules", "lib", "dist", "scripts", "bench"]
 }
