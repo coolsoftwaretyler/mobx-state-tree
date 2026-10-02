@@ -463,7 +463,7 @@ export class MapType<IT extends IAnyType> extends ComplexType<
             }
         })
 
-        for (let key in snapshot) {
+        for (const key in snapshot) {
             if (!Object.prototype.hasOwnProperty.call(snapshot, key) || target.has(key)) continue
             target.set(key, snapshot[key])
         }

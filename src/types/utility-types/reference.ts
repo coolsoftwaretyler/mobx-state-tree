@@ -30,7 +30,6 @@ import {
     IStateTreeNode,
     devMode,
     isType,
-    type IAnyModelType,
     getCurrentActionContext,
     setImmediateWithFallback
 } from "../../internal"

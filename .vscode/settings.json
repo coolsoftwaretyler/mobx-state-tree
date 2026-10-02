@@ -2,7 +2,6 @@
 {
     "editor.insertSpaces": true,
     "editor.trimAutoWhitespace": true,
-    "tslint.configFile": "tslint.json",
     "typescript.tsdk": "node_modules/typescript/lib",
     "[typescript]": {
         "editor.formatOnSave": true,
@@ -13,6 +12,5 @@
         "editor.formatOnPaste": true
     },
     "npm.packageManager": "yarn",
-    "tslint.packageManager": "yarn",
     "eslint.packageManager": "yarn"
 }

@@ -10,7 +10,6 @@ import {
     ExtractNodeType,
     assertIsType,
     isType,
-    getSnapshot,
     devMode,
     ComplexType,
     typeCheckFailure,

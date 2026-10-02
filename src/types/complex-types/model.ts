@@ -117,8 +117,6 @@ type IsOptionalValue<C, TV, FV> = undefined extends C ? TV : FV
 // type _E = IsOptionalValue<any, true, false> // true
 // type _F = IsOptionalValue<unknown, true, false> // true
 
-type AnyObject = Record<string, any>
-
 /**
  * Name of the properties of an object that can't be set to undefined, any or unknown
  * @hidden
@@ -437,9 +435,9 @@ export class ModelType<
             let action2 = actions[name]
 
             // apply hook composition
-            let baseAction = (self as any)[name]
+            const baseAction = (self as any)[name]
             if (name in Hook && baseAction) {
-                let specializedAction = action2
+                const specializedAction = action2
                 action2 = function () {
                     baseAction.apply(null, arguments)
                     specializedAction.apply(null, arguments)
@@ -449,7 +447,7 @@ export class ModelType<
             // the goal of this is to make sure actions using "this" can call themselves,
             // while still allowing the middlewares to register them
             const middlewares = (action2 as any).$mst_middleware // make sure middlewares are not lost
-            let boundAction = action2.bind(actions)
+            const boundAction = action2.bind(actions)
             boundAction._isFlowAction = (action2 as FunctionWithFlag)._isFlowAction || false
             boundAction.$mst_middleware = middlewares
             const actionInvoker = createActionInvoker(self as any, name, boundAction)
@@ -510,7 +508,7 @@ export class ModelType<
     ) {
         const initializer = (self: Instance<this>) => {
             const { actions, views, state, ...rest } = fn(self)
-            for (let key in rest)
+            for (const key in rest)
                 throw new MstError(
                     `The \`extend\` function should return an object with a subset of the fields 'actions', 'views' and 'state'. Found invalid key '${key}'`
                 )
@@ -758,7 +756,7 @@ export class ModelType<
     }
 
     isValidSnapshot(value: this["C"], context: IValidationContext): IValidationResult {
-        let snapshot = this.applySnapshotPreProcessor(value)
+        const snapshot = this.applySnapshotPreProcessor(value)
 
         if (!isPlainObject(snapshot)) {
             return typeCheckFailure(context, snapshot, "Value is not a plain object")

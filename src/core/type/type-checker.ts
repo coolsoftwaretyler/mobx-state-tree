@@ -10,8 +10,7 @@ import {
     ErrorFormattingOptions,
     IAnyType,
     ExtractCSTWithSTN,
-    isTypeCheckingEnabled,
-    devMode
+    isTypeCheckingEnabled
 } from "../../internal"
 
 /** Validation context entry, this is, where the validation should run against which type */

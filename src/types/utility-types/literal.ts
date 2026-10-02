@@ -10,8 +10,7 @@ import {
     isType,
     Primitives,
     AnyObjectNode,
-    SimpleType,
-    devMode
+    SimpleType
 } from "../../internal"
 import { assertArg } from "../../utils"
 

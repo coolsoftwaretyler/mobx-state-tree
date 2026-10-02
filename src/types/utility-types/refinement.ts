@@ -11,8 +11,7 @@ import {
     AnyObjectNode,
     BaseType,
     ExtractNodeType,
-    assertIsType,
-    devMode
+    assertIsType
 } from "../../internal"
 import { assertIsString, assertIsFunction } from "../../utils"
 

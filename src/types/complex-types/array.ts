@@ -245,7 +245,7 @@ export class ArrayType<IT extends IAnyType> extends ComplexType<
                             op: "replace",
                             path: "",
                             value: node.snapshot,
-                            oldValue: change.removed.map(node => node.snapshot)
+                            oldValue: change.removed.map(removedNode => removedNode.snapshot)
                         },
                         node
                     )

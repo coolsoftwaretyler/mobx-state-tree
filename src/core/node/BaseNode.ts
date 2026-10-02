@@ -23,7 +23,7 @@ type HookSubscribers = {
  * @internal
  * @hidden
  */
-export abstract class BaseNode<C, S, T> {
+export abstract class BaseNode<_C, S, T> {
     private _escapedSubpath?: string
 
     private _subpath!: string

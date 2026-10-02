@@ -516,7 +516,7 @@ export class ObjectNode<C, S, T> extends BaseNode<C, S, T> {
 
     finalizeCreation(): void {
         this.baseFinalizeCreation(() => {
-            for (let child of this.getChildren()) {
+            for (const child of this.getChildren()) {
                 child.finalizeCreation()
             }
 

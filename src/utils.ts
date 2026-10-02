@@ -119,7 +119,7 @@ export function extend(a: any, ...b: any[]): any
 export function extend(a: any, ...b: any[]) {
     for (let i = 0; i < b.length; i++) {
         const current = b[i]
-        for (let key in current) a[key] = current[key]
+        for (const key in current) a[key] = current[key]
     }
     return a
 }
@@ -210,9 +210,11 @@ export function isSerializable(value: any) {
  * @hidden
  */
 export function defineProperty(object: any, key: PropertyKey, descriptor: PropertyDescriptor) {
-    isObservableObject(object)
-        ? mobxDefineProperty(object, key, descriptor)
-        : Object.defineProperty(object, key, descriptor)
+    if (isObservableObject(object)) {
+        mobxDefineProperty(object, key, descriptor)
+    } else {
+        Object.defineProperty(object, key, descriptor)
+    }
 }
 
 /**
