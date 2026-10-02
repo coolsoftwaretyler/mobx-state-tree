@@ -54,9 +54,6 @@
     "files": [
         "dist/"
     ],
-    "dependencies": {
-        "ts-essentials": "^9.4.1"
-    },
     "devDependencies": {
         "@size-limit/preset-big-lib": "^5.0.3",
         "@types/bun": "^1.0.6",

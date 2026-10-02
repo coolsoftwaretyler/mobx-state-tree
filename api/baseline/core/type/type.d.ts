@@ -1,5 +1,16 @@
 import { IValidationContext, IValidationResult, IStateTreeNode, ObjectNode, ModelPrimitive, AnyNode } from "../../internal";
-import type { WritableKeys } from "ts-essentials";
+type Writable<T> = {
+    -readonly [K in keyof T]: T[K];
+};
+type IsEqualConsideringWritability<A, B> = (<X>() => X extends A ? 1 : 2) extends <X>() => X extends B ? 1 : 2 ? true : false;
+type IsFullyWritable<T extends object> = IsEqualConsideringWritability<{
+    [K in keyof T]: T[K];
+}, Writable<{
+    [K in keyof T]: T[K];
+}>>;
+type WritableKeys<T extends {}> = {
+    [K in keyof T]-?: IsFullyWritable<Pick<T, K>> extends true ? K : never;
+}[keyof T];
 export type STNValue<T, IT extends IAnyType> = T extends object ? T & IStateTreeNode<IT> : T;
 declare const $type: unique symbol;
 type ExcludeReadonly<T> = T extends {} ? T[WritableKeys<T>] : T;

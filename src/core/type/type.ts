@@ -24,7 +24,25 @@ import {
     getStateTreeNodeSafe,
     assertArg
 } from "../../internal"
-import type { Writable, WritableKeys } from "ts-essentials"
+
+/** @hidden */
+type Writable<T> = { -readonly [K in keyof T]: T[K] }
+/** @hidden */
+type IsEqualConsideringWritability<A, B> =
+    (<X>() => X extends A ? 1 : 2) extends <X>() => X extends B ? 1 : 2 ? true : false
+/** @hidden */
+type IsFullyWritable<T extends object> = IsEqualConsideringWritability<
+    { [K in keyof T]: T[K] },
+    Writable<{ [K in keyof T]: T[K] }>
+>
+/**
+ * Keys of T whose properties are not readonly. Local replacement for the
+ * `WritableKeys` helper that used to come from ts-essentials; type-identical.
+ * @hidden
+ */
+type WritableKeys<T extends {}> = {
+    [K in keyof T]-?: IsFullyWritable<Pick<T, K>> extends true ? K : never
+}[keyof T]
 
 /**
  * @internal

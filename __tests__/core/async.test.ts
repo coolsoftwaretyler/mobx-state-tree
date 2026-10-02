@@ -14,7 +14,7 @@ import {
     types
 } from "../../src"
 import { expect, test } from "bun:test"
-import type { Writable } from "ts-essentials"
+type Writable<T> = { -readonly [K in keyof T]: T[K] }
 
 function delay<TV>(time: number, value: TV, shouldThrow = false): Promise<TV> {
     return new Promise((resolve, reject) => {
