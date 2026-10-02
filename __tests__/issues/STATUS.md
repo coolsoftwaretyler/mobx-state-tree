@@ -6,13 +6,20 @@ Generated from the per-issue worker reports after review. One test file per issu
 |---|---|---|---|---|---|
 | [#1291](https://github.com/mobxjs/mobx-state-tree/issues/1291) | CANNOT_REPRODUCE | runtime | low |  | yes |
 | [#1297](https://github.com/mobxjs/mobx-state-tree/issues/1297) | ALREADY_FIXED | runtime | high | eef7b6d7 (#1581, 2021) | yes |
+| [#1303](https://github.com/mobxjs/mobx-state-tree/issues/1303) | CANNOT_REPRODUCE | runtime | medium | src/core/node/object-node.ts createObservableInstance dev-mode assertion; reachable only when a never-instantiated node is touched in a state other than INITIAL | yes |
+| [#1369](https://github.com/mobxjs/mobx-state-tree/issues/1369) | REPRODUCES | runtime | high | src/types/utility-types/refinement.ts Refinement.instantiate delegates to _subtype.instantiate, so the node's type is the subtype; getType in src/core/mst-opera | no |
 | [#1458](https://github.com/mobxjs/mobx-state-tree/issues/1458) | REPRODUCES | runtime | high | src/types/utility-types/reference.ts addTargetNodeWatcher: the beforeDetach/beforeDestroy hooks are registered once, on the node the reference resolved to at wa | yes |
+| [#1631](https://github.com/mobxjs/mobx-state-tree/issues/1631) | WORKS_AS_DESIGNED | types | medium |  | yes |
 | [#1640](https://github.com/mobxjs/mobx-state-tree/issues/1640) | ALREADY_FIXED | types | high | 3a2945db (#2199) | yes |
 | [#1738](https://github.com/mobxjs/mobx-state-tree/issues/1738) | ALREADY_FIXED | types | high | 3a2945db (#2199) | yes |
 | [#1745](https://github.com/mobxjs/mobx-state-tree/issues/1745) | WORKS_AS_DESIGNED | runtime | high | The castToReferenceSnapshot JSDoc example in src/core/mst-operations.ts (around lines 988-1006, mirrored in docs/API) creates `a` and `b` as separate roots, whi | yes |
 | [#1760](https://github.com/mobxjs/mobx-state-tree/issues/1760) | ALREADY_FIXED | types | medium | 3a2945db (#2199) | yes |
 | [#1778](https://github.com/mobxjs/mobx-state-tree/issues/1778) | REPRODUCES | types | high | src/core/mst-operations.ts resolveIdentifier: the type parameter is constrained to `IT extends IAnyModelType`. | yes |
 | [#1874](https://github.com/mobxjs/mobx-state-tree/issues/1874) | REPRODUCES | runtime | high | src/types/complex-types/map.ts MSTMap.put (the !isValidIdentifier(id) branch, ~lines 194-198) builds a standalone instance with getChildType().create(value) jus | yes |
+| [#2105](https://github.com/mobxjs/mobx-state-tree/issues/2105) | WORKS_AS_DESIGNED | runtime | medium | src/types/complex-types/model.ts createNewInstance/finalizeNewInstance: observable.object stores child nodes, reads are unboxed via _interceptReads, so MobX's l | yes |
+| [#2185](https://github.com/mobxjs/mobx-state-tree/issues/2185) | CANNOT_REPRODUCE | runtime | high |  | no |
+| [#2217](https://github.com/mobxjs/mobx-state-tree/issues/2217) | CANNOT_REPRODUCE | types | medium |  | no |
 | [#2255](https://github.com/mobxjs/mobx-state-tree/issues/2255) | CANNOT_REPRODUCE | runtime | low |  | yes |
+| [#2275](https://github.com/mobxjs/mobx-state-tree/issues/2275) | REPRODUCES | both | high | src/types/complex-types/map.ts: IMSTMap declares observe and intercept, but class MSTMap (extends ObservableMap) does not implement them; MapType casts the inst | no |
 
 Statuses: REPRODUCES (test is `test.failing`, flips when fixed), ALREADY_FIXED (plain regression test; close citing the fixing change), WORKS_AS_DESIGNED (test pins documented behavior; fix is docs), CANNOT_REPRODUCE (`test.todo` records what is missing).
