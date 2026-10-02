@@ -8,6 +8,7 @@
  * Compare two result files with `bun run bench:compare <baseline.json> <current.json>`.
  */
 import { scenarios } from "./scenarios"
+import { issueScenarios } from "./issue-scenarios"
 import { writeFileSync, mkdirSync } from "fs"
 import { dirname } from "path"
 import { execSync } from "child_process"
@@ -38,7 +39,7 @@ try {
 } catch {}
 
 const results = []
-for (const s of scenarios) {
+for (const s of [...scenarios, ...issueScenarios]) {
     if (filter && !s.name.includes(filter)) continue
     for (let i = 0; i < warmup; i++) {
         s.run()

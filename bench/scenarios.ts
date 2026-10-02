@@ -43,7 +43,7 @@ const Catalog = types
         }
     }))
 
-export type Scenario = { name: string; issue?: string; run: () => number }
+export type Scenario = { name: string; issue?: string; unit?: "ms" | "bytes"; run: () => number }
 
 export const scenarios: Scenario[] = [
     { name: "create 10k small models", run: () => smallScenario(10_000).elapsed },
