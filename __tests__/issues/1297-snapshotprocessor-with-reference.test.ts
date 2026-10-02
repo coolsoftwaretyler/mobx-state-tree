@@ -3,6 +3,7 @@
  * types.snapshotProcessor and types.reference
  *
  * Status: ALREADY_FIXED
+ * Fixed by: eef7b6d7 (#1581, 2021): snapshotProcessor stopped proxying isAssignableFrom onto the wrapped type
  * Summary: A `types.reference(SimpleLog)` pointing at a node whose type is
  * `types.snapshotProcessor(SimpleLog, ...)` used to throw "Failed to resolve reference '2' to type
  * 'SimpleLog'" on read. On current source the reference resolves, both for a single processed

@@ -3,6 +3,7 @@
  * types.reference is not working on instance creation
  *
  * Status: ALREADY_FIXED
+ * Fixed by: 3a2945db (#2199, 2024)
  * Summary: The README "Using a MST type at design time" example creates `Author` and `Tweet`
  * (with `author: types.reference(Author)`) instances, then passes them to `RootStore.create`.
  * TypeScript used to reject `tweets: [tweet]` because the instance's `author` is not a

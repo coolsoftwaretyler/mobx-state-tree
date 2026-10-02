@@ -3,6 +3,7 @@
  * `cast` TS error when `types.array` sub-type has reference
  *
  * Status: ALREADY_FIXED
+ * Fixed by: 3a2945db (#2199, 2024)
  * Summary: `self.entities = cast(entities)`, where `entities` is an array of instances of a model
  * that has a `types.reference` property, used to fail with "... is not assignable to type
  * 'ReferenceIdentifier'" while the same `cast` worked for a model without references. On current
