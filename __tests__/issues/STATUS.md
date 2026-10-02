@@ -23,9 +23,11 @@ Generated from the per-issue worker reports after review. One test file per issu
 | [#1526](https://github.com/mobxjs/mobx-state-tree/issues/1526) | REPRODUCES | runtime | medium | src/types/utility-types/union.ts Union.determineType, the reconcileCurrentType branch (added as the fix for #1045) | yes |
 | [#1547](https://github.com/mobxjs/mobx-state-tree/issues/1547) | WORKS_AS_DESIGNED | runtime | medium | src/types/utility-types/snapshotProcessor.ts SnapshotProcessor.is / isValidSnapshot run the preProcessor on undefined, and the union created by types.maybe() di | no |
 | [#1551](https://github.com/mobxjs/mobx-state-tree/issues/1551) | REPRODUCES | runtime | high | src/core/node/object-node.ts ObjectNode.setParent (~line 348-351): fires Hook.afterAttach immediately for an already-created child even though the new parent's  | yes |
+| [#1596](https://github.com/mobxjs/mobx-state-tree/issues/1596) | CANNOT_REPRODUCE | runtime | low |  | yes |
 | [#1631](https://github.com/mobxjs/mobx-state-tree/issues/1631) | WORKS_AS_DESIGNED | types | medium |  | yes |
 | [#1640](https://github.com/mobxjs/mobx-state-tree/issues/1640) | ALREADY_FIXED | types | high | 3a2945db (#2199) | yes |
 | [#1648](https://github.com/mobxjs/mobx-state-tree/issues/1648) | WORKS_AS_DESIGNED | runtime | high |  | yes |
+| [#1683](https://github.com/mobxjs/mobx-state-tree/issues/1683) | REPRODUCES | runtime | high | Per-node footprint of ObjectNode plus its MobX observable object, computed snapshot, identifiersCache entry and per-instance action/view closures (src/core/node | no |
 | [#1738](https://github.com/mobxjs/mobx-state-tree/issues/1738) | ALREADY_FIXED | types | high | 3a2945db (#2199) | yes |
 | [#1745](https://github.com/mobxjs/mobx-state-tree/issues/1745) | WORKS_AS_DESIGNED | runtime | high | The castToReferenceSnapshot JSDoc example in src/core/mst-operations.ts (around lines 988-1006, mirrored in docs/API) creates `a` and `b` as separate roots, whi | yes |
 | [#1760](https://github.com/mobxjs/mobx-state-tree/issues/1760) | ALREADY_FIXED | types | medium | 3a2945db (#2199) | yes |
@@ -43,6 +45,7 @@ Generated from the per-issue worker reports after review. One test file per issu
 | [#2211](https://github.com/mobxjs/mobx-state-tree/issues/2211) | WORKS_AS_DESIGNED | runtime | medium | src/core/node/object-node.ts: createObservableInstance (~line 239, if (this.isRoot) this._addSnapshotReaction()) and _addSnapshotReaction (~683-692) install a p | no |
 | [#2216](https://github.com/mobxjs/mobx-state-tree/issues/2216) | REPRODUCES | types | high | src/types/complex-types/model.ts IModelType.props (~line 200) `PROPS & ModelPropertiesDeclarationToProperties<PROPS2>`: in the intersection, P['error']['Creatio | yes |
 | [#2217](https://github.com/mobxjs/mobx-state-tree/issues/2217) | CANNOT_REPRODUCE | types | medium |  | no |
+| [#2237](https://github.com/mobxjs/mobx-state-tree/issues/2237) | REPRODUCES | runtime | high | src/types/complex-types/array.ts reconcileArrayChildren: when oldNodes[i] does not match, the inner loop 'for j = i..oldNodes.length' calls areSame on every rem | yes |
 | [#2253](https://github.com/mobxjs/mobx-state-tree/issues/2253) | REPRODUCES | types | high | src/types/complex-types/model.ts types.compose overloads (around lines 830 to 870) return IModelType<PA & PB, ...>, a plain intersection where the required prop | yes |
 | [#2255](https://github.com/mobxjs/mobx-state-tree/issues/2255) | CANNOT_REPRODUCE | runtime | low |  | yes |
 | [#2275](https://github.com/mobxjs/mobx-state-tree/issues/2275) | REPRODUCES | both | high | src/types/complex-types/map.ts: IMSTMap declares observe and intercept, but class MSTMap (extends ObservableMap) does not implement them; MapType casts the inst | no |
