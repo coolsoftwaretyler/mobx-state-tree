@@ -1,3 +1,4 @@
+import { performance } from "perf_hooks"
 /**
  * Benchmark scenarios. Each returns the elapsed milliseconds of the measured section only;
  * setup happens before the timer starts. Keep scenarios deterministic and allocation-light

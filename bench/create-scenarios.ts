@@ -1,3 +1,4 @@
+import { performance } from "perf_hooks"
 import { Treasure, Hero, Monster } from "./fixtures/fixture-models"
 import { createTreasure, createHeros, createMonsters } from "./fixtures/fixture-data"
 
