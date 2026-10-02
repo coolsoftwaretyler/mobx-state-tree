@@ -1,0 +1,13 @@
+{
+  "schema_calibrated_on": "v2",
+  "gold_size": 26,
+  "disposition": { "accept": 0.70, "review": 0.40, "evidence": "gold v2: conf>=0.7 agreed 17/18; conf<0.5 agreed 6/8 (Jev underconfident there)" },
+  "module": { "accept": 0.50, "review": 0.00, "evidence": "gold v2: 26/26 agreed at every confidence level" },
+  "closure": {
+    "verify_then_close_resolved": { "thread_already_resolved": 0.80 },
+    "needs_info_unanswered": { "blocked_on_info": 0.60 },
+    "stale_question": { "dispositions": ["usage_question", "other"], "min_years_idle": 3 },
+    "informational_only": ["maintainer_declined", "external_cause", "has_workaround"],
+    "evidence": "Tyler kept all 8 issues the v2 provisional policy flagged: docs tasks and features are actionable regardless of age; past declines are history; workarounds are not resolution"
+  }
+}

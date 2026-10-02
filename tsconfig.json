@@ -22,5 +22,6 @@
     "isolatedModules": true,
     "skipLibCheck": true
   },
-  "include": ["**/*.js", "**/*.ts"]
+  "include": ["**/*.js", "**/*.ts"],
+  "exclude": ["node_modules", "lib", "dist", "triage"]
 }

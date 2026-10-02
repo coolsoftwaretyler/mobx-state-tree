@@ -1,0 +1,14 @@
+{
+  "name": "mst-triage",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@typesafe-ai/sdk": "^0.6.0"
+  },
+  "scripts": {
+    "classify": "bun run run.ts",
+    "report": "python3 report.py && python3 clusters.py",
+    "eval": "python3 eval.py",
+    "export-issues": "gh issue list --repo mobxjs/mobx-state-tree --state open --limit 1000 --json number,title,body,labels,createdAt,updatedAt,author,comments,reactionGroups,url"
+  }
+}

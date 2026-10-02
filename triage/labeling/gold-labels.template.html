@@ -1,0 +1,238 @@
+<title>MST Gold Labels</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: fixed issue list on the left, one issue at a time on the right; the label controls sit at the bottom of the issue so the thread is read before the choice is made. */
+:root {
+  --bg: #F6F7F9; --surface: #FFFFFF; --line: #D9DEE5; --fg: #1B2430; --muted: #5B6778;
+  --accent: #0E6B78; --accent-ink: #FFFFFF; --accent-soft: #DCEFF2; --ok: #2B7A4B; --warn: #A86B12; --code-bg: #EEF1F5;
+  --sans: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121820; --surface: #1A222C; --line: #2B3542; --fg: #E6EBF1; --muted: #93A1B3;
+  --accent: #5FC7D4; --accent-ink: #0B1A1E; --accent-soft: #163239; --ok: #6BCB8B; --warn: #E0A84A; --code-bg: #0E141B; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121820; --surface: #1A222C; --line: #2B3542; --fg: #E6EBF1; --muted: #93A1B3;
+  --accent: #5FC7D4; --accent-ink: #0B1A1E; --accent-soft: #163239; --ok: #6BCB8B; --warn: #E0A84A; --code-bg: #0E141B; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 15px; line-height: 1.5; padding-inline: 16px; padding-block: 20px 48px }
+a { color: var(--accent) }
+h1, h2, h3 { margin: 0; text-wrap: balance; font-weight: 600 }
+h1 { font-size: 20px } h2 { font-size: 16px } h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted) }
+button { font: inherit; cursor: pointer }
+button:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.num, .mono { font-family: var(--mono); font-variant-numeric: tabular-nums }
+
+.app { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 272px minmax(0, 1fr); gap: 24px; align-items: start }
+header.top { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px }
+header.top p { margin: 0; color: var(--muted) }
+.progress { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px }
+.bar { flex: 1; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden }
+.bar > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .25s }
+.banner { grid-column: 1 / -1; padding: 10px 14px; border: 1px solid var(--warn); border-radius: 6px; color: var(--fg); background: var(--surface) }
+
+nav.list { position: sticky; top: env(safe-area-inset-top, 0px); max-height: calc(100vh - 24px); overflow: auto; display: flex; flex-direction: column; gap: 2px }
+nav.list button { display: grid; grid-template-columns: 20px 52px minmax(0, 1fr); gap: 8px; align-items: baseline; text-align: left; width: 100%; padding: 7px 8px; border: 0; border-radius: 6px; background: transparent; color: var(--fg) }
+nav.list button:hover { background: var(--surface) }
+nav.list button[aria-current="true"] { background: var(--accent-soft) }
+nav.list .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px }
+nav.list .chk { color: var(--ok); font-weight: 600; visibility: hidden } nav.list .done .chk { visibility: visible }
+nav.list .n { color: var(--muted); font-size: 12px }
+
+main { display: flex; flex-direction: column; gap: 20px; min-width: 0 }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; min-width: 0 }
+.issue-head { display: flex; flex-direction: column; gap: 6px }
+.issue-head .meta { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted); font-size: 13px }
+.chip { display: inline-block; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line); font-size: 12px; color: var(--muted) }
+.chip.role { border-color: var(--accent); color: var(--accent) }
+
+.jev { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px }
+.probs { display: flex; flex-direction: column; gap: 4px; margin-top: 8px }
+.probs .row { display: grid; grid-template-columns: minmax(0, 1fr) 46px; gap: 8px; align-items: center; font-size: 13px }
+.probs .lbl { position: relative; padding: 2px 6px; border-radius: 4px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis }
+.probs .lbl > i { position: absolute; inset: 0; background: var(--accent-soft); z-index: 0 } .probs .lbl > span { position: relative; z-index: 1 }
+.probs .v { text-align: right; color: var(--muted) }
+.nouls { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px }
+.nouls .chip b { color: var(--fg); font-weight: 500 }
+
+.thread { display: flex; flex-direction: column; gap: 14px }
+.post { display: flex; flex-direction: column; gap: 6px; padding-top: 12px; border-top: 1px solid var(--line) }
+.post:first-child { border-top: 0; padding-top: 0 }
+.post .by { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; font-size: 13px; color: var(--muted) }
+.post .by b { color: var(--fg); font-weight: 500 }
+.md { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px }
+.md pre { white-space: pre; overflow-x: auto; background: var(--code-bg); border-radius: 6px; padding: 10px 12px; font-family: var(--mono); font-size: 12.5px; line-height: 1.45; margin: 6px 0 }
+.md code { font-family: var(--mono); font-size: 12.5px; background: var(--code-bg); padding: 0 4px; border-radius: 3px }
+.more { align-self: flex-start; background: none; border: 1px solid var(--line); color: var(--muted); border-radius: 6px; padding: 4px 10px; font-size: 13px }
+
+.label { display: flex; flex-direction: column; gap: 14px; position: sticky; bottom: 0 }
+.opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px }
+.opts button { text-align: left; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); display: flex; flex-direction: column; gap: 2px }
+.opts button .k { font-weight: 500; font-size: 14px } .opts button .d { font-size: 12px; color: var(--muted); line-height: 1.35 }
+.opts button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink) } .opts button[aria-pressed="true"] .d { color: var(--accent-ink); opacity: .85 }
+.opts button.jev-pick:not([aria-pressed="true"]) { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent) }
+.field { display: flex; flex-direction: column; gap: 6px } .field label { font-size: 13px; color: var(--muted) }
+select, textarea { font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; width: 100%; max-width: 100% }
+textarea { min-height: 64px; resize: vertical }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center }
+.btn { padding: 9px 16px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font-weight: 500 }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink) }
+.btn:disabled { opacity: .5; cursor: default }
+.status { font-size: 13px; color: var(--muted); min-height: 1.2em }
+.status.ok { color: var(--ok) } .status.err { color: var(--warn) }
+.row2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px }
+details.export summary { cursor: pointer; color: var(--muted); font-size: 13px }
+details.export textarea { font-family: var(--mono); font-size: 12px; min-height: 120px; margin-top: 8px }
+kbd { font-family: var(--mono); font-size: 11px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; color: var(--muted) }
+
+@media (max-width: 860px) {
+  .app { grid-template-columns: minmax(0, 1fr) }
+  nav.list { position: static; max-height: none; flex-direction: row; overflow-x: auto; padding-bottom: 6px }
+  nav.list button { width: auto; grid-template-columns: auto auto; flex: 0 0 auto } nav.list .t { display: none }
+  .label { position: static }
+}
+@media (prefers-reduced-motion: reduce) { .bar > i { transition: none } }
+</style>
+
+<div class="app">
+  <header class="top">
+    <h1>MST Gold Labels</h1>
+    <p>26 open issues from mobx-state-tree, classified by Jev v2. Choose the label you would give as maintainer. Jev's pick is marked with a left bar; agree or override.</p>
+  </header>
+  <div class="progress"><span class="num" id="progress-text">0 / 26 labeled</span><div class="bar"><i id="progress-bar"></i></div></div>
+  <div class="banner" id="banner" hidden></div>
+
+  <nav class="list" id="list" aria-label="Issues"></nav>
+
+  <main>
+    <section class="card issue-head" id="issue-head"></section>
+    <section class="card">
+      <h3>Jev's read</h3>
+      <div class="jev" id="jev"></div>
+    </section>
+    <section class="card">
+      <h3>Thread</h3>
+      <div class="thread" id="thread"></div>
+    </section>
+    <section class="card label" id="label">
+      <h2>Your label</h2>
+      <div class="opts" id="disp-opts" role="group" aria-label="Disposition"></div>
+      <div class="row2">
+        <div class="field"><label for="module-select">Code area most at fault</label><select id="module-select"></select></div>
+        <div class="field"><label for="notes">Notes for Claude, optional</label><textarea id="notes" placeholder="Why, or what the fix should be"></textarea></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="save">Save and next</button>
+        <button class="btn" id="prev">Previous</button>
+        <button class="btn" id="next">Skip</button>
+        <span class="status" id="status"></span>
+        <span class="status"><kbd>←</kbd> <kbd>→</kbd> move · <kbd>⌘</kbd><kbd>↵</kbd> save</span>
+      </div>
+      <details class="export"><summary>All labels as JSON, in case saving is unavailable</summary><textarea id="export" readonly></textarea><div class="actions" style="margin-top:8px"><button class="btn" id="copy">Copy JSON</button><span class="status" id="copy-status"></span></div></details>
+    </section>
+  </main>
+</div>
+
+<script type="application/json" id="gold-data">__DATA__</script>
+<script>
+const DATA = JSON.parse(document.getElementById("gold-data").textContent);
+const DISP = {
+  runtime_bug: "Wrong runtime behavior under documented usage",
+  typescript_defect: "Runtime fine; types wrong, loose, or never/any/unknown",
+  performance_or_memory: "Correct but too slow or memory hungry",
+  docs_only: "Behavior correct; docs or examples are the gap",
+  usage_question: "How-do-I; the library already supports it",
+  feature_api_neutral: "Improvement with no new public API",
+  feature_new_api: "New public functions, types, or options",
+  breaking_change_proposal: "Would change existing behavior or API",
+  infra_chore: "Build, lint, packaging, release, CI",
+  other: "None of these fit",
+  close_stale: "Nothing actionable remains; close",
+  close_already_resolved: "Fixed, superseded, or worked around; close"
+};
+const MODULES = __MODULES__;
+const ASSOC = { MEMBER: "maintainer", COLLABORATOR: "maintainer", OWNER: "maintainer", CONTRIBUTOR: "contributor" };
+
+let idx = 0, labels = {}, db = null, uid = null, saving = false, dirty = false;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+function md(s) {
+  const parts = String(s || "").split(/```[a-zA-Z0-9_-]*\n?/);
+  return parts.map((p, i) => i % 2 ? `<pre>${esc(p)}</pre>` : esc(p).replace(/`([^`\n]+)`/g, "<code>$1</code>").replace(/!\[[^\]]*\]\([^)]*\)/g, "[image]").replace(/&lt;!--[\s\S]*?--&gt;/g, "")).join("");
+}
+
+function renderList() {
+  $("list").innerHTML = DATA.map((d, i) => `<button type="button" data-i="${i}" class="${labels[d.number] ? "done" : ""}" aria-current="${i === idx}"><span class="chk">✓</span><span class="n num">#${d.number}</span><span class="t">${esc(d.title)}</span></button>`).join("");
+  const n = DATA.filter((d) => labels[d.number]).length;
+  $("progress-text").textContent = `${n} / ${DATA.length} labeled`;
+  $("progress-bar").style.width = (100 * n / DATA.length) + "%";
+}
+function probs(obj, pick) {
+  return `<div class="probs">${Object.entries(obj).map(([k, v]) => `<div class="row"><span class="lbl" title="${esc(k)}"><i style="width:${Math.round(v * 100)}%"></i><span>${k === pick ? "<b>" + esc(k) + "</b>" : esc(k)}</span></span><span class="v num">${v.toFixed(2)}</span></div>`).join("")}</div>`;
+}
+function renderIssue() {
+  const d = DATA[idx], j = d.jev, L = labels[d.number];
+  $("issue-head").innerHTML = `<h2><a href="${esc(d.url)}" target="_blank" rel="noopener">#${d.number} ${esc(d.title)}</a></h2>
+    <div class="meta"><span>opened ${d.created} by <b>${esc(d.author)}</b></span><span>last activity ${d.updated}</span>${d.labels.map((l) => `<span class="chip">${esc(l)}</span>`).join("")}</div>`;
+  const nouls = Object.entries(j.nouls || {}).map(([k, v]) => `<span class="chip">${esc(k.replace(/_/g, " "))} <b class="num">${v.toFixed(2)}</b></span>`).join("");
+  $("jev").innerHTML = `<div><h3>Disposition · conf <span class="num">${j.disp_conf.toFixed(2)}</span></h3>${probs(j.disp_probs, j.disposition)}</div>
+    <div><h3>Module · conf <span class="num">${j.mod_conf.toFixed(2)}</span></h3>${probs(j.mod_probs, j.module)}</div>
+    <div><h3>Severity <span class="num">${j.severity}</span> / 3</h3><div class="nouls">${nouls}</div></div>`;
+  const posts = [{ author: d.author, assoc: "", date: d.created, body: d.body, op: true }, ...d.comments];
+  const show = (p) => `<div class="post"><div class="by"><b>${esc(p.author)}</b>${p.op ? '<span class="chip">reporter</span>' : ""}${ASSOC[p.assoc] ? `<span class="chip role">${ASSOC[p.assoc]}</span>` : ""}<span>${p.date || ""}</span></div><div class="md">${md(p.body)}</div></div>`;
+  const head = posts.slice(0, 4), tail = posts.slice(4);
+  $("thread").innerHTML = head.map(show).join("") + (tail.length ? `<button class="more" type="button" id="more">Show ${tail.length} more comments</button><div id="tail" hidden>${tail.map(show).join("")}</div>` : "");
+  if (tail.length) $("more").onclick = () => { $("tail").hidden = false; $("more").hidden = true; };
+  const cur = L ? L.disposition : null;
+  $("disp-opts").innerHTML = Object.entries(DISP).map(([k, v]) => `<button type="button" data-k="${k}" class="${k === j.disposition ? "jev-pick" : ""}" aria-pressed="${k === cur}"><span class="k">${k}</span><span class="d">${v}</span></button>`).join("");
+  $("module-select").innerHTML = MODULES.map((m) => `<option value="${m}" ${m === (L ? L.module : j.module) ? "selected" : ""}>${m}${m === j.module ? "  (Jev)" : ""}</option>`).join("");
+  $("notes").value = L ? (L.notes || "") : "";
+  $("status").textContent = L ? `Saved ${L.labeled_at ? new Date(L.labeled_at).toLocaleString() : ""}` : "";
+  $("status").className = "status";
+  dirty = false;
+  renderList();
+  window.scrollTo({ top: 0 });
+}
+function selected() { const b = $("disp-opts").querySelector('[aria-pressed="true"]'); return b ? b.dataset.k : null; }
+function go(i) { idx = (i + DATA.length) % DATA.length; renderIssue(); }
+function nextUnlabeled() { for (let k = 1; k <= DATA.length; k++) { const i = (idx + k) % DATA.length; if (!labels[DATA[i].number]) return go(i); } go(idx + 1); }
+function renderExport() { $("export").value = JSON.stringify(Object.values(labels).sort((a, b) => a.number - b.number), null, 2); }
+
+async function save() {
+  const d = DATA[idx], disp = selected();
+  if (!disp) { $("status").textContent = "Pick a disposition first."; $("status").className = "status err"; return; }
+  const doc = { number: d.number, title: d.title, disposition: disp, module: $("module-select").value, notes: $("notes").value.trim(), jev_disposition: d.jev.disposition, jev_module: d.jev.module, labeled_at: new Date().toISOString(), labeler: uid };
+  labels[d.number] = doc; renderExport();
+  if (!db) { $("status").textContent = "Kept on this page only. Copy the JSON below when done."; $("status").className = "status err"; renderList(); return nextUnlabeled(); }
+  if (saving) return; saving = true; $("save").disabled = true;
+  try { await db.doc("labels/" + d.number).set(doc); $("status").textContent = "Saved"; $("status").className = "status ok"; nextUnlabeled(); }
+  catch (e) { $("status").textContent = "Save failed: " + (e && e.code ? e.code : e); $("status").className = "status err"; }
+  finally { saving = false; $("save").disabled = false; }
+}
+
+$("disp-opts").addEventListener("click", (e) => { const b = e.target.closest("button[data-k]"); if (!b) return; for (const x of $("disp-opts").children) x.setAttribute("aria-pressed", String(x === b)); dirty = true; });
+$("list").addEventListener("click", (e) => { const b = e.target.closest("button[data-i]"); if (b) go(+b.dataset.i); });
+$("save").onclick = save; $("prev").onclick = () => go(idx - 1); $("next").onclick = () => go(idx + 1);
+$("notes").addEventListener("input", () => { dirty = true; }); $("module-select").addEventListener("change", () => { dirty = true; });
+$("copy").onclick = async () => { try { await navigator.clipboard.writeText($("export").value); $("copy-status").textContent = "Copied"; } catch { $("export").select(); $("copy-status").textContent = "Select and copy manually"; } };
+document.addEventListener("keydown", (e) => {
+  const t = e.target.tagName;
+  if ((e.metaKey || e.ctrlKey) && e.key === "Enter") { e.preventDefault(); save(); return; }
+  if (t === "TEXTAREA" || t === "SELECT" || t === "INPUT") return;
+  if (e.key === "ArrowRight") go(idx + 1); if (e.key === "ArrowLeft") go(idx - 1);
+});
+
+renderIssue(); renderExport();
+
+(async () => {
+  const user = await window.claude?.use?.("user");
+  uid = user ? await user.id() : null;
+  db = await window.claude?.use?.("db");
+  if (!db) { $("banner").textContent = "Saving is unavailable in this view. Your choices stay on this page; copy the JSON at the bottom when you finish."; $("banner").hidden = false; return; }
+  db.collection("labels").onSnapshot((snap) => {
+    const fresh = {}; snap.docs.forEach((s) => { const x = s.data(); if (x && x.number != null) fresh[x.number] = x; });
+    labels = fresh; renderExport();
+    if (!dirty) renderIssue(); else renderList();
+  }, (err) => { $("banner").textContent = "Live sync stopped (" + err.code + "). Saves may still work; reload to resync."; $("banner").hidden = false; });
+})();
+</script>
