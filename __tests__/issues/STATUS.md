@@ -4,6 +4,8 @@ Generated from the per-issue worker reports after review. One test file per issu
 
 | issue | status | kind | confidence | suspected cause / fixed by | fix API-neutral? |
 |---|---|---|---|---|---|
+| [#1201](https://github.com/mobxjs/mobx-state-tree/issues/1201) | WORKS_AS_DESIGNED | types | medium |  | no |
+| [#1271](https://github.com/mobxjs/mobx-state-tree/issues/1271) | REPRODUCES | runtime | high | src/middlewares/create-action-tracking-middleware.ts, cases flow_return and flow_throw: they look up and runningActions.delete(call.rootId), but a nested flow s | yes |
 | [#1291](https://github.com/mobxjs/mobx-state-tree/issues/1291) | CANNOT_REPRODUCE | runtime | low |  | yes |
 | [#1297](https://github.com/mobxjs/mobx-state-tree/issues/1297) | ALREADY_FIXED | runtime | high | eef7b6d7 (#1581, 2021) | yes |
 | [#1303](https://github.com/mobxjs/mobx-state-tree/issues/1303) | CANNOT_REPRODUCE | runtime | medium | src/core/node/object-node.ts createObservableInstance dev-mode assertion; reachable only when a never-instantiated node is touched in a state other than INITIAL | yes |
@@ -11,6 +13,7 @@ Generated from the per-issue worker reports after review. One test file per issu
 | [#1369](https://github.com/mobxjs/mobx-state-tree/issues/1369) | REPRODUCES | runtime | high | src/types/utility-types/refinement.ts Refinement.instantiate delegates to _subtype.instantiate, so the node's type is the subtype; getType in src/core/mst-opera | no |
 | [#1396](https://github.com/mobxjs/mobx-state-tree/issues/1396) | REPRODUCES | runtime | high | src/core/node/object-node.ts lazy observable-instance creation: ObjectNode.getSnapshot returns _getCachedInitialSnapshot() (cached once via _cachedInitialSnapsh | yes |
 | [#1399](https://github.com/mobxjs/mobx-state-tree/issues/1399) | REPRODUCES | runtime | medium | src/types/utility-types/union.ts Union.determineType: the reconcileCurrentType branch returns the current node type whenever it accepts the snapshot, even when  | yes |
+| [#1433](https://github.com/mobxjs/mobx-state-tree/issues/1433) | REPRODUCES | runtime | high | src/core/mst-operations.ts walk(): recurses on child.storedValue, which is undefined for lazily instantiated object nodes. The fix should create the instance on | yes |
 | [#1458](https://github.com/mobxjs/mobx-state-tree/issues/1458) | REPRODUCES | runtime | high | src/types/utility-types/reference.ts addTargetNodeWatcher: the beforeDetach/beforeDestroy hooks are registered once, on the node the reference resolved to at wa | yes |
 | [#1526](https://github.com/mobxjs/mobx-state-tree/issues/1526) | REPRODUCES | runtime | medium | src/types/utility-types/union.ts Union.determineType, the reconcileCurrentType branch (added as the fix for #1045) | yes |
 | [#1547](https://github.com/mobxjs/mobx-state-tree/issues/1547) | WORKS_AS_DESIGNED | runtime | medium | src/types/utility-types/snapshotProcessor.ts SnapshotProcessor.is / isValidSnapshot run the preProcessor on undefined, and the union created by types.maybe() di | no |
@@ -25,6 +28,8 @@ Generated from the per-issue worker reports after review. One test file per issu
 | [#1874](https://github.com/mobxjs/mobx-state-tree/issues/1874) | REPRODUCES | runtime | high | src/types/complex-types/map.ts MSTMap.put (the !isValidIdentifier(id) branch, ~lines 194-198) builds a standalone instance with getChildType().create(value) jus | yes |
 | [#1897](https://github.com/mobxjs/mobx-state-tree/issues/1897) | REPRODUCES | runtime | high | src/types/utility-types/snapshotProcessor.ts SnapshotProcessor._fixNode -> proxyNodeTypeMethods(node.type, this, "create"): assigns `create` on the shared inner | yes |
 | [#1929](https://github.com/mobxjs/mobx-state-tree/issues/1929) | REPRODUCES | both | medium | src/types/complex-types/array.ts IArrayType creation type includes `/ undefined` (same in map.ts IMapType) and src/types/utility-types/union.ts IUnionType passe | yes |
+| [#1987](https://github.com/mobxjs/mobx-state-tree/issues/1987) | WORKS_AS_DESIGNED | runtime | medium |  | no |
+| [#2040](https://github.com/mobxjs/mobx-state-tree/issues/2040) | WORKS_AS_DESIGNED | types | high | TypeScript limitation: TS always folds yield operand types into a generator's inferred type, so the generic actions()/flow() calls must infer root.load() while  | no |
 | [#2105](https://github.com/mobxjs/mobx-state-tree/issues/2105) | WORKS_AS_DESIGNED | runtime | medium | src/types/complex-types/model.ts createNewInstance/finalizeNewInstance: observable.object stores child nodes, reads are unboxed via _interceptReads, so MobX's l | yes |
 | [#2136](https://github.com/mobxjs/mobx-state-tree/issues/2136) | REPRODUCES | runtime | high | src/core/node/object-node.ts ObjectNode.finalizeDeath reads this.snapshot after its children already died; the `snapshot` getter calls createObservableInstanceI | yes |
 | [#2185](https://github.com/mobxjs/mobx-state-tree/issues/2185) | CANNOT_REPRODUCE | runtime | high |  | no |
