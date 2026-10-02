@@ -51,8 +51,9 @@ When changing the API, commit the code changes first, then run `npm run build-do
 5. Make your changes and ensure that all tests pass (including any new tests you have added).
 6. Update the documentation if necessary.
 7. Commit your changes: `git commit -m "Add my feature"`. Please consider [following conventional commit formatting](https://www.conventionalcommits.org/en/v1.0.0/).
-8. Push your changes to your fork: `git push origin my-feature`.
-9. Create a pull request on the MobX-State-Tree repository. We have a pull request template. If you fill that out and include examples of your changes, links to any issue(s) you're working on, and a good description of your PR, that would help us out a lot. If you skip those steps, we may ask you for clarification before reviewing your work.
+8. If your change is visible to users (a bug fix, a behavior change, a new feature, a dependency change), run `bun changeset`, pick the bump type, and describe the change the way you'd want to read it in release notes. Commit the generated file in `.changeset/` with your change. Pure chores such as tests, docs, and tooling need no changeset.
+9. Push your changes to your fork: `git push origin my-feature`.
+10. Create a pull request on the MobX-State-Tree repository. We have a pull request template. If you fill that out and include examples of your changes, links to any issue(s) you're working on, and a good description of your PR, that would help us out a lot. If you skip those steps, we may ask you for clarification before reviewing your work.
 
 Our team will review your pull request as soon as possible and provide feedback. Please be patient, as it may take some time to review and merge your contribution.
 
@@ -62,6 +63,10 @@ If you encounter a bug while using MobX-State-Tree, please help us by reporting 
 
 1. Check if the bug has already been reported by searching our [issue tracker](https://github.com/mobxjs/mobx-state-tree/issues).
 2. If not, create a new issue, including as much detail as possible about the bug and steps to reproduce it. We have issue templates that will ask specific questions for you to help us understand the problem.
+
+## Releases
+
+Maintainers cut releases from accumulated changesets: `bun run release:version` applies them (bumps `package.json`, updates `CHANGELOG.md`, deletes the consumed changeset files), that result is committed and merged, then `bun run release:publish` builds and publishes to npm.
 
 ## Bigger PRs
 

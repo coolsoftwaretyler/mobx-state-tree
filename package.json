@@ -35,7 +35,10 @@
         "api:check": "bun run scripts/api-check.ts",
         "api:update": "bun run scripts/api-check.ts --update",
         "bench": "bun run bench/run.ts",
-        "bench:compare": "bun run bench/compare.ts"
+        "bench:compare": "bun run bench/compare.ts",
+        "changeset": "changeset",
+        "release:version": "changeset version",
+        "release:publish": "bun run build && changeset publish"
     },
     "lint-staged": {
         "*.{ts,tsx,js,jsx}": [
@@ -55,6 +58,7 @@
         "dist/"
     ],
     "devDependencies": {
+        "@changesets/cli": "3.0.3",
         "@size-limit/preset-big-lib": "^5.0.3",
         "@types/bun": "^1.0.6",
         "@types/node": "^12.0.2",
