@@ -1,0 +1,12 @@
+import { ISimpleType, IType } from "../internal";
+export declare const string: ISimpleType<string>;
+export declare const number: ISimpleType<number>;
+export declare const integer: ISimpleType<number>;
+export declare const float: ISimpleType<number>;
+export declare const finite: ISimpleType<number>;
+export declare const bigint: IType<bigint | string | number, string, bigint>;
+export declare const boolean: ISimpleType<boolean>;
+export declare const nullType: ISimpleType<null>;
+export declare const undefinedType: ISimpleType<undefined>;
+export declare const DatePrimitive: IType<number | Date, number, Date>;
+export declare function isPrimitiveType(type: unknown): type is ISimpleType<string> | ISimpleType<number> | ISimpleType<boolean> | typeof bigint | typeof DatePrimitive;

@@ -19,10 +19,10 @@
         "build": "bun run clean && tsc && cpr lib/src dist --filter=\\.js$ && rollup -c",
         "test:dev": "NODE_ENV=development bun test",
         "test:prod": "MST_TESTING=1 NODE_ENV=production bun test",
-        "test:all": "bun run test:dev && bun run test:prod && bun run size",
+        "test:all": "bun run test:dev && bun run test:prod && bun run size && bun run api:check",
         "test:perf": "bun test ./__tests__/perf/",
         "test:perf:compiled": "bun run build && bun run jest:perf && TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' /usr/bin/time node --expose-gc --require ts-node/register __tests__/perf/report.ts",
-        "typecheck": "tsc --noEmit",
+        "typecheck": "tsc --noEmit && tsc --noEmit -p scripts",
         "size": "size-limit",
         "tag-new-version": "yarn version && git push --tags",
         "build-docs": "bun run fix-typedoc && shx rm -rf ./docs/API && typedoc --options ./typedocconfig.js && node scripts/fix-docs-source-links.js",
@@ -33,7 +33,9 @@
         "fix-typedoc": "shx rm -rf ./node_modules/typedoc/node_modules/typescript",
         "prettier:list": "prettier --list-different \"src/**/*.ts\" \"__tests__/**/*.ts\"",
         "prettier:check": "prettier --check \"src/**/*.ts\" \"__tests__/**/*.ts\"",
-        "prettier:write": "prettier --write \"src/**/*.ts\" \"__tests__/**/*.ts\""
+        "prettier:write": "prettier --write \"src/**/*.ts\" \"__tests__/**/*.ts\"",
+        "api:check": "bun run scripts/api-check.ts",
+        "api:update": "bun run scripts/api-check.ts --update"
     },
     "lint-staged": {
         "*.{ts,tsx,js,jsx}": [

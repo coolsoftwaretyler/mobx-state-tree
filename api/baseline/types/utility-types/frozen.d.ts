@@ -1,0 +1,5 @@
+import { IType, type ISimpleType } from "../../internal";
+export declare function frozen<C>(subType: IType<C, any, any>): IType<C, C, C>;
+export declare function frozen<T>(defaultValue: T): IType<T | undefined | null, T, T>;
+export declare function frozen<T = any>(): IType<T, T, T>;
+export declare function isFrozenType(type: unknown): type is ISimpleType<any>;
